@@ -56,9 +56,78 @@ class _CurrencyConverterHomeState extends State<CurrencyConverterHome> {
                     setState(() {
                       amount = double.tryParse(value) ?? 0.0;
                       total = amount * rate;
-                    });
+                    }); 
                   },
                 ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      child: DropdownButton<String> (
+                        value: fromCurrency,
+                        isExpanded: true,
+                        items: currencies.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            fromCurrency = newValue!;
+                            //_getRate();
+                          });
+                        },
+                      ),
+                    ),
+                    IconButton(
+                      // onPressed: _swapCurrencies,
+                      onPressed: null,
+                      icon: Icon(
+                        Icons.swap_horiz,
+                        size: 40, 
+                        color: Colors.white
+                        ),
+                    ),
+                    SizedBox(
+                      width: 100,
+                      child: DropdownButton<String> (
+                        value: toCurrency,
+                        isExpanded: true,
+                        items: currencies.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            toCurrency = newValue!;
+                            //_getRate();
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: 10),
+              Text('Rate: $rate', 
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18
+                )
+              ),
+              SizedBox(height: 20),
+              Text(total.toStringAsFixed(3),
+                style: TextStyle(
+                  color: Colors.greenAccent,
+                  fontSize: 30
+                )
               ),
             ],
           ),
