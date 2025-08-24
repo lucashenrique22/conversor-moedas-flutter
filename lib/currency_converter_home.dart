@@ -1,5 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 class CurrencyConverterHome extends StatefulWidget {
   const CurrencyConverterHome({super.key});
 
@@ -15,6 +16,44 @@ class _CurrencyConverterHomeState extends State<CurrencyConverterHome> {
   double total = 0.0;
   TextEditingController amountController = TextEditingController();
   List<String> currencies = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrencies();
+  }
+
+  Future<void> _getCurrencies() async {
+    
+     var response = await http.get(Uri.parse('https://api.exchangerate-api.com/v4/latest/USD'));
+
+     var data = json.decode(response.body);
+
+    setState(() {
+      currencies = (data['rates'] as Map<String, dynamic>).keys.toList();
+      rate = data['rates'][toCurrency] ?? 1.0;
+    });
+  }
+
+  Future<void> _getRate() async {
+    
+     var response = await http.get(Uri.parse('https://api.exchangerate-api.com/v4/latest/$fromCurrency'));
+
+     var data = json.decode(response.body);
+
+    setState(() {
+      rate = data['rates'][toCurrency] ?? 1.0;
+    });
+  }
+
+  void _swapCurrencies() {
+    setState(() {
+      String temp = fromCurrency;
+      fromCurrency = toCurrency;
+      toCurrency = temp;
+      _getRate();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +109,8 @@ class _CurrencyConverterHomeState extends State<CurrencyConverterHome> {
                       child: DropdownButton<String> (
                         value: fromCurrency,
                         isExpanded: true,
+                        style: TextStyle(color: Colors.white),
+                        dropdownColor: Color(0xFF1d2630),
                         items: currencies.map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -79,14 +120,13 @@ class _CurrencyConverterHomeState extends State<CurrencyConverterHome> {
                         onChanged: (String? newValue) {
                           setState(() {
                             fromCurrency = newValue!;
-                            //_getRate();
+                            _getRate();
                           });
                         },
                       ),
                     ),
                     IconButton(
-                      // onPressed: _swapCurrencies,
-                      onPressed: null,
+                      onPressed: _swapCurrencies,
                       icon: Icon(
                         Icons.swap_horiz,
                         size: 40, 
@@ -98,6 +138,8 @@ class _CurrencyConverterHomeState extends State<CurrencyConverterHome> {
                       child: DropdownButton<String> (
                         value: toCurrency,
                         isExpanded: true,
+                        style: TextStyle(color: Colors.white),
+                        dropdownColor: Color(0xFF1d2630),
                         items: currencies.map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -107,7 +149,7 @@ class _CurrencyConverterHomeState extends State<CurrencyConverterHome> {
                         onChanged: (String? newValue) {
                           setState(() {
                             toCurrency = newValue!;
-                            //_getRate();
+                            _getRate();
                           });
                         },
                       ),
