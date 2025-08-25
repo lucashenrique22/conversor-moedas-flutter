@@ -1,16 +1,30 @@
-# conversor_moedas
+# 💱 Conversor de Moedas Flutter
 
-A new Flutter project.
+![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
 
-## Getting Started
+Um aplicativo de conversão de moedas simples e intuitivo desenvolvido em Flutter, permitindo conversões entre diversas moedas.
+## ✨ Funcionalidades
 
-This project is a starting point for a Flutter application.
+- Conversão em tempo real entre moedas
+- Interface limpa e fácil de usar
+- Seleção de moedas de origem e destino
+- Cálculos instantâneos enquanto digita
 
-A few resources to get you started if this is your first Flutter project:
+## 🛠️ Tecnologias Utilizadas
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Flutter** - Framework de desenvolvimento multiplataforma
+- **Dart** - Linguagem de programação
+- **Material Design** - Para componentes de UI
+- **Git** - Controle de versão
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📦 Instalação e Execução
+
+### Pré-requisitos
+- Flutter SDK instalado ([guia de instalação](https://flutter.dev/docs/get-started/install))
+- Dispositivo físico ou emulador configurado (no caso utilizei o emulador Nexus 5)
+
+### Passos para executar
+1. Clone o repositório:
+```bash
+git clone https://github.com/lucashenrique22/conversor-moedas-flutter.git
